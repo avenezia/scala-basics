@@ -14,13 +14,13 @@ import support.HandsOnSuite
   *     - parameters are 'public val' by default (so we do not need to type it)
   *     - a 'copy' method is generated
   *
-  *  Besides making our code mode concise, case classes enable pattern matching (which we'll explore later)
+  *  Besides making our code more concise, case classes enable pattern matching (which we'll explore later)
   */
 class e2_case_classes extends HandsOnSuite {
 
 
   /**
-    * In the following exercises, we will work with the two case classes bellow
+    * In the following exercises, we will work with the two case classes below
     */
   case class MyDog(name: String, race: String) // by default, parameters are 'public val'
   case class Person(firstname: String, lastname: String, age: Int = 0, phone: String = "") // we can set default values to some parameters
@@ -41,12 +41,12 @@ class e2_case_classes extends HandsOnSuite {
     val d1 = MyDog("Scooby", "Doberman")
     val d2 = MyDog("Rex", "Custom")
     val d3 = new MyDog("Scooby", "Doberman")    // we can use the keyword 'new', but it is not necessary
-    val d4 = MyDog.apply("Rex", "Custom")       // utilisation de la méthode apply
+    val d4 = MyDog.apply("Rex", "Custom")       // Using apply method to build a MyDog
 
-    (d1 == d3) should be(__)
-    (d1 == d2) should be(__)
-    (d2 == d3) should be(__)
-    (d2 == d4) should be(__)
+    (d1 == d3) should be(true)
+    (d1 == d2) should be(false)
+    (d2 == d3) should be(false)
+    (d2 == d4) should be(true)
   }
 
   exercise("Case classes have an equals method, that 'just works'") {
@@ -56,12 +56,12 @@ class e2_case_classes extends HandsOnSuite {
     val p3 = new MyDog("Rex", "Chihuahua")
 
     // Scala's == is equivalent to Java's .equals
-    (p1 == p2) should be(__)
-    (p1 == p3) should be(__)
+    (p1 == p2) should be(false)
+    (p1 == p3) should be(true)
 
     // If you need to compare references, you can use Scala's eq, which is equivalent to Java's ==
-    (p1 eq p2) should be(__)
-    (p1 eq p3) should be(__)
+    (p1 eq p2) should be(false)
+    (p1 eq p3) should be(false)
   }
 
   /**
@@ -73,8 +73,8 @@ class e2_case_classes extends HandsOnSuite {
     val p2 = new MyDog("Rookie", "Rotweiler")
     val p3 = new MyDog("Snap", "Pitbull")
 
-    (p1.hashCode == p2.hashCode) should be(__)
-    (p1.hashCode == p3.hashCode) should be(__)
+    (p1.hashCode == p2.hashCode) should be(false)
+    (p1.hashCode == p3.hashCode) should be(true)
   }
 
 
@@ -84,23 +84,24 @@ class e2_case_classes extends HandsOnSuite {
   exercise("Case classes come with automatically generated accessors") {
 
     val d1 = MyDog("Scooby", "Doberman")
-    d1.name should be(__)
-    d1.race should be(__)
+    d1.name should be("Scooby")
+    d1.race should be("Doberman")
 
     // What happens if we uncomment the following line ?
+    // It doesn't compile
     //d1.name = "Scooby Doo"
   }
 
-  exercise("We can 'update' an instance using copy") {
+  exercise("We can 'update an instance using copy") {
     val d1 = MyDog("Scooby", "Doberman")
 
     val d2 = d1.copy(name = "Scooby Doo") // creates a copy with a different value for the field name
 
-    d1.name should be(__)
-    d1.race should be(__)
+    d1.name should be("Scooby")
+    d1.race should be("Doberman")
 
-    d2.name should be(__)
-    d2.race should be(__)
+    d2.name should be("Scooby Doo")
+    d2.race should be("Doberman")
   }
 
   exercise("We can use named parameters and default values") {
@@ -119,18 +120,18 @@ class e2_case_classes extends HandsOnSuite {
     p1.firstname should be("Sherlock")
     p1.lastname should be("Holmes")
     p1.age should be(23)
-    p1.phone should be(__)
+    p1.phone should be("06-XX-XX-XX-XX")
 
     p2.firstname should be("Doctor")
-    p2.lastname should be(__)
+    p2.lastname should be("Watson")
     p2.age should be(0)
-    p2.phone should be(__)
+    p2.phone should be("")
 
-    p3.lastname should be(__)
+    p3.lastname should be("Moriarty")
     p3.firstname should be("Professor")
     p3.age should be(0)
-    p3.phone should be(__)
+    p3.phone should be("01-XX-XX-XX-XX")
 
-    (p3 == p4) should be(__)
+    (p3 == p4) should be(false)
   }
 }

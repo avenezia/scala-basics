@@ -5,17 +5,17 @@ import util.Random
 import scala.collection
 
 /**
-  * Lets build our own collection type !
+  * Let's build our own collection type !
   *
   * Well, this will be quite a boring and useless collection, but hopefully, it
-  * will give you some insight about how Scala's collection work internally.
+  * will give you some insight about how Scala's collections work internally.
   *
   * We'll define the Bag structure, which is a collection containing exactly one
   * element (boring, eh ?). We'll define just enough methods on it so that users
   * can interact with it, without the need of knowing its (dead simple) internal
   * structure.
   *
-  * Before jumping into the implementation (i.e, replacing the ??? bellow with
+  * Before jumping into the implementation (i.e, replacing the ??? below with
   * actual code), we need to fill the few blanks ( __ ) in the tests at the
   * bottom of the file.
   *
@@ -32,7 +32,7 @@ class e0_bags extends HandsOnSuite {
       * We already know about map, it simply applies the function to the content of
       * our Bag, without changing its structure.
       */
-    def map(function:Int => Int):Bag = ???
+    def map(function:Int => Int):Bag = new Bag(function(content))
 
     /**
       * flatmap is a slightly scarier beast. We pass if a function that returns a new
@@ -41,7 +41,7 @@ class e0_bags extends HandsOnSuite {
       *
       * Once again, just follow the types ...
       */
-    def flatMap(function:Int => Bag):Bag = ???
+    def flatMap(function:Int => Bag):Bag = function(content)
 
   }
 
@@ -67,7 +67,7 @@ class e0_bags extends HandsOnSuite {
     val myBiggerBag  = for (i <- myLittleBagOfZero) yield i + more
 
 
-    myBiggerBag.content should be(__)
+    myBiggerBag.content should be(12345)
 
   }
 

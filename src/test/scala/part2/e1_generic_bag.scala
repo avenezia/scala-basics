@@ -4,7 +4,7 @@ import support.HandsOnSuite
 
 /**
   * Int is a perfectly fine type, but why should we limit our Bags to it ?
-  * Lets see if we can make a generic Bag !
+  * Let's see if we can make a generic Bag !
   *
   * You know the motto : just follow the types !
   */
@@ -12,9 +12,9 @@ class e1_generic_bag  extends  HandsOnSuite {
 
   case class Bag[A](content:A) {
 
-    def map[B](function: A => B):Bag[B] = ???
+    def map[B](function: A => B):Bag[B] = Bag[B](function(content))
 
-    def flatMap[B](function: A => Bag[B]):Bag[B] = ???
+    def flatMap[B](function: A => Bag[B]):Bag[B] = function(content)
 
   }
 

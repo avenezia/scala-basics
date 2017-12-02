@@ -3,14 +3,13 @@ package first_steps
 import support.HandsOnSuite
 
 /**
-*  Les for, comprendre le 'for' classique et le 'for comprehension'.
+*  For and for comprehension.
 *
-*  Les for sont applicable sur toutes collections.
+*  For is applicable on any collection.
 */
 
 class e3_for_loops_and_comprehensions extends HandsOnSuite {
 
-  //for classique
 
   exercise("The for loop is straightforward") {
 
@@ -21,13 +20,13 @@ class e3_for_loops_and_comprehensions extends HandsOnSuite {
     // or
     //  val digits = 0 until 10
 
-    // Lets mutate some variable in a loop
+    // Let's mutate some variable in a loop
     var sum = 0
     for (i <- digits) {
       sum += i
     }
 
-    sum should equal(__)
+    sum should equal(45)
   }
 
   exercise("We can add 'filters' in a for") {
@@ -39,7 +38,7 @@ class e3_for_loops_and_comprehensions extends HandsOnSuite {
       sum += i
     }
 
-    sum should equal(__)
+    sum should equal(20)
   }
 
 
@@ -47,13 +46,13 @@ class e3_for_loops_and_comprehensions extends HandsOnSuite {
     * When it comes to Scala, the term for-loop is a kind of misuse.
     *
     * The constructs above look like loops, but are rather named for-comprehensions in Scala.
-    * In the examples above, we relied on side effects within the comprehensions because it resemble the loops you're
+    * In the examples above, we relied on side effects within the comprehensions because it resembles the loops you're
     * probably used to, but is not idiomatic Scala.
     *
     * But what is a for-comprehension ?
     *
     * For-comprehensions go well beyond simple iteration. They can be applied to many more data structures than just Lists.
-    * A very important point is that it is the data structures that 'knows' how to navigate trough its elements, so the
+    * A very important point is that it is the data structure that 'knows' how to navigate through its elements, so the
     * programmer does not need to bother with that mere implementation details.
     *
     * A for-comp is composed of two parts :
@@ -67,17 +66,17 @@ class e3_for_loops_and_comprehensions extends HandsOnSuite {
     
     val digits = List(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
 
-    // Notice that a for comprehension is an expression, that can be assigned to a variable
+    // Notice that a for comprehension is an expression that can be assigned to a variable
     val aList =
       for {
         i <- digits if (i % 2) == 0
       }
       yield i
 
-    aList should be(__)
+    aList should be(List(0, 2, 4, 6, 8))
 
     // List has a method sum that sums the elements values (only if it is a List of numeric type)
-    aList.sum should be(__)
+    aList.sum should be(20)
   }
 
   exercise("We can nest generators") {
@@ -89,7 +88,7 @@ class e3_for_loops_and_comprehensions extends HandsOnSuite {
       y <- yValues
     }
     yield (x, y) // this (x, y) creates a pair (2-tuple) with x and y
-    coordinates(4) should be(__)
+    coordinates(4) should be((3, 1))
   }
 
 }

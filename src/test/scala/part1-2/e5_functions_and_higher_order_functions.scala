@@ -18,12 +18,12 @@ import support.HandsOnSuite
   * other functions) are called higher-order functions. We've already seen examples of such
   * higher-order functions (or rather methods) with map and filter.
   *
-  * Internally, functions are modelled as instances of a FunctionN trait. For example, functions
+  * Internally, functions are modeled as instances of a FunctionN trait. For example, functions
   * of no argument implement the Function0 trait, functions of one argument implement Function1,
   * and so on up to Function21 (that is, you cannot define functions with more than 21 arguments).
   *
   * The FunctionN traits define only one method 'apply' that take N arguments. There is a special rule
-  * in Scala syntax that allow to call methods named 'apply' without typing the name, that is :
+  * in Scala syntax that allows to call methods named 'apply' without typing the name, that is :
   *
   *   someInstance.apply(x)
   *
@@ -42,9 +42,9 @@ import support.HandsOnSuite
   *
   *   (Int, String) => Boolean          is the type of functions that take an Int and a String and return a Boolean
   *
-  *   (String, Int => Int) => String    is ???
+  *   (String, Int => Int) => String    is the type of function that take a function taking a String and Int returning an Int and return a String
   *
-  *   (Long => Int) => (Long => Long)   is ???
+  *   (Long => Int) => (Long => Long)   is the type of functions that take a function taking a Long returning a Int and returning a function taking a long and returning a long
   *
   *   ... etc
   *
@@ -67,25 +67,25 @@ class e5_functions_and_higher_order_functions extends HandsOnSuite {
     val lambda = (x: Int) => x + 1
     def result = List(1, 2, 3) map lambda
 
-    result should be(__)
+    result should be(List(2, 3, 4))
   }
 
   /**
     * We can also use the keyword 'def' inside a method's body to create a local function
     * */
   exercise("Local functions") {
-    def result = List(1, 2, 3) map (__)
+    def result = List(1, 2, 3) map (x => x + 1)
 
     result should be(List(2, 3, 4))
 
     def shorterSyntax = List(1, 2, 3) map ( _ * 2 )
-    shorterSyntax should be(__)
+    shorterSyntax should be(List(2, 4, 6))
   }
 
 
 
   /**
-  *  Les fonctions de plus haut niveau peuvent retourner des fonctions
+  *  High order functions can return functions
   */
   exercise("Functions returning functions") {
     def addWithoutSyntaxSugar(x: Int) = {
@@ -95,14 +95,14 @@ class e5_functions_and_higher_order_functions extends HandsOnSuite {
     }
 
     // remember, this is equivalent to addWithoutSyntaxSugar(1).apply(2)
-    addWithoutSyntaxSugar(1)(2) should be(__)
+    addWithoutSyntaxSugar(1)(2) should be(3)
 
     //or more simply
     def add(x: Int) = (y: Int) => x + y
-    add(2)(3) should be(__)
+    add(2)(3) should be(5)
 
     def addFive = add(5)
-    addFive(42) should be(__)
+    addFive(42) should be(47)
   }
 
   exercise("Functions taking functions as parameters") {
@@ -113,12 +113,12 @@ class e5_functions_and_higher_order_functions extends HandsOnSuite {
 
     def makeWhatheverYouLike(xs: List[String], transformation: String => String) = xs map transformation
 
-    makeWhatheverYouLike(List("ABC", "XYZ", "123"), ???) should be(List("abc", "xyz", "123"))
+    makeWhatheverYouLike(List("ABC", "XYZ", "123"), xs => xs.toLowerCase) should be(List("abc", "xyz", "123"))
 
     //using it inline
     List("Scala", "Erlang", "Clojure") map {
       _.length
-    } should be(__)
+    } should be(List(5, 6, 7))
   }
 
   /**
@@ -166,8 +166,8 @@ class e5_functions_and_higher_order_functions extends HandsOnSuite {
     def multiply(x: Int, y: Int) = x * y
     val multiplyCurried = (multiply _).curried
 
-    multiply(4, 5) should be(__)
-    multiplyCurried(4)(5) should be(__)
+    multiply(4, 5) should be(20)
+    multiplyCurried(4)(5) should be(20)
   }
 
 
@@ -177,10 +177,10 @@ class e5_functions_and_higher_order_functions extends HandsOnSuite {
     }
     def isEven(x: Int) = x % 2 == 0
     val xs = List(12, 11, 5, 20, 3, 13, 2)
-    customFilter(isEven)(xs) should be(__)
+    customFilter(isEven)(xs) should be(List(12, 20, 2))
 
     val onlyEvenFilter = customFilter(isEven) _
 
-    onlyEvenFilter(xs) should be(__)
+    onlyEvenFilter(xs) should be(List(12, 20, 2))
   }
 }
